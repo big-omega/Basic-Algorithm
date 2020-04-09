@@ -19,110 +19,28 @@ func binarySearch(nums []int, target int) int {
 	return -1
 }
 
+func generateOrderedArray(size int) []int {
+	nums := make([]int, size)
+	for i := range nums {
+		nums[i] = i
+	}
+
+	return nums
+}
+
 func Test_binarySearch(t *testing.T) {
-	type args struct {
-		nums   []int
-		target int
+	upBound := 1000000
+	nums := generateOrderedArray(upBound)
+	for i := range nums {
+		if got := binarySearch(nums, i); got != i {
+			t.Errorf("binarySearch() = %d, expected %d\n", got, i)
+		}
 	}
-	tests := []struct {
-		name string
-		args args
-		want int
-	}{
-		{
-			name: "",
-			args: args{
-				nums:   nil,
-				target: -1,
-			},
-			want: -1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0},
-				target: -1,
-			},
-			want: -1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0},
-				target: 0,
-			},
-			want: 0,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0},
-				target: 1,
-			},
-			want: -1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: -1,
-			},
-			want: -1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: 0,
-			},
-			want: 0,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: 2,
-			},
-			want: 1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: 5,
-			},
-			want: 2,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: 6,
-			},
-			want: -1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: 1,
-			},
-			want: -1,
-		},
-		{
-			name: "",
-			args: args{
-				nums:   []int{0, 2, 5},
-				target: 4,
-			},
-			want: -1,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := binarySearch(tt.args.nums, tt.args.target); got != tt.want {
-				t.Errorf("binarySearch() = %v, want %v", got, tt.want)
-			}
-		})
+
+	outboundNums := []int{-5, -4, -3, -2, -1, upBound, upBound + 1, upBound + 2, upBound + 3}
+	for _, v := range outboundNums {
+		if got := binarySearch(nums, v); got != -1 {
+			t.Errorf("binarySearch() = %d, expected %d\n", got, -1)
+		}
 	}
 }
